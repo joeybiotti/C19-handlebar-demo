@@ -17,11 +17,13 @@ bakery.getInventory =()=>{
 bakery.loadInventory = () => {
     return new Promise(function(resolve, reject) {
         let inventoryLoader = new XMLHttpRequest();
-        inventoryLoader.open("GET", "inventory.json");
+        //invetoryLoader.open("GET", "invetory.json")
+        inventoryLoader.open("GET", "https://awesomedata-5de8b.firebaseio.com/ccakes.json");
         inventoryLoader.send();
 
         inventoryLoader.addEventListener("load", function() {
             var data = JSON.parse(this.responseText);
+            console.log("data", data);
             resolve(data);
         });
     });
@@ -79,8 +81,10 @@ Handlebars.registerHelper("increment", (value)=> parseInt(value) + 1);
 $("#welcome").append(welcomeTemplate(welcomeData));
 
 function populatePage(stuff){
+	let obj = {ccakes : stuff};
 	let newDiv = document.createElement("div");
-	newDiv.innerHTML = cakeTemplate(stuff);
+	console.log("stuff", stuff);
+	newDiv.innerHTML = cakeTemplate(obj);
 	$("#cake-cards").append(newDiv);
 	eventStuff();
 }
@@ -1243,7 +1247,7 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
     + alias4(((helper = (helper = helpers.kind || (depth0 != null ? depth0.kind : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"kind","hash":{},"data":data}) : helper)))
     + "</h4>\n     <div class=\"cake-price\">$"
     + alias4(((helper = (helper = helpers.price || (depth0 != null ? depth0.price : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"price","hash":{},"data":data}) : helper)))
-    + "</div>\n     <div class=\"card-img\" style=\"background-image: url('img/"
+    + "</div>\n     <div class=\"card-img\" style=\"background-image: url('../img/"
     + alias4(((helper = (helper = helpers.image || (depth0 != null ? depth0.image : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"image","hash":{},"data":data}) : helper)))
     + "')\"></div>\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.purchased : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -1262,13 +1266,13 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 let welcomeData = {
     name: "The CupCake-ery",
     cakeType: [{
-        cake: "Chocolate",
+        cake: "Chocolate ",
         topping: "Mint"
     }, {
-        cake: "Strawberry",
+        cake: "Strawberry ",
         topping: "Lemon"
     }, {
-        cake: "Carrot",
+        cake: "Carrot ",
         topping: "Cream"
     }]
 };
@@ -1283,6 +1287,7 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 
   return "	"
     + alias4(((helper = (helper = helpers.cake || (depth0 != null ? depth0.cake : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"cake","hash":{},"data":data}) : helper)))
+    + "  "
     + alias4(((helper = (helper = helpers.topping || (depth0 != null ? depth0.topping : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"topping","hash":{},"data":data}) : helper)))
     + "\n"
     + ((stack1 = helpers.unless.call(alias1,(data && data.last),{"name":"unless","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -1294,7 +1299,7 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 
   return "<h2>"
     + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</h2>\n<p>\nWe bake the most delicious cake varieties like\n"
+    + "!</h2>\n<p>\nWe bake the most delicious cake varieties like\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.cakeType : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</p>";
 },"useData":true});

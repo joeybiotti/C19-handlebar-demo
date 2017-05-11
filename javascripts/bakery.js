@@ -16,11 +16,13 @@ bakery.getInventory =()=>{
 bakery.loadInventory = () => {
     return new Promise(function(resolve, reject) {
         let inventoryLoader = new XMLHttpRequest();
-        inventoryLoader.open("GET", "inventory.json");
+        //invetoryLoader.open("GET", "invetory.json")
+        inventoryLoader.open("GET", "https://awesomedata-5de8b.firebaseio.com/ccakes.json");
         inventoryLoader.send();
 
         inventoryLoader.addEventListener("load", function() {
             var data = JSON.parse(this.responseText);
+            console.log("data", data);
             resolve(data);
         });
     });
